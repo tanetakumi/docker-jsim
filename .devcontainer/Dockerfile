@@ -4,6 +4,8 @@ LABEL maintainer="tanetakumi"
 
 ENV DISPLAY host.docker.internal:0.0
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # ENV HOME /home/${USER}
 ENV SHELL /bin/bash
 
@@ -13,12 +15,13 @@ RUN apt-get -y install build-essential
 
 RUN apt-get -y install python3 && apt-get -y install python3-pip
 
+
 RUN apt -y install git\
     && apt -y install wget\
     && apt -y install tar\
     && apt -y install vim\
-    && apt install x11-apps\
-    && apt-get install python3-tk
+    && apt -y install x11-apps\
+    && apt-get -y install python3-tk
 
 # set -ex コマンドの実行に失敗したらその場で終了する
 RUN set -ex\ 
@@ -30,7 +33,7 @@ RUN set -ex\
     && make\
     && cp jsim /usr/local/bin
 
-
+RUN pip install -r requirments.txt
 # 一般ユーザーアカウントを追加
 # RUN useradd -m ${USER}
 # 一般ユーザーにsudo権限を付与
