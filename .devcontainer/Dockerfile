@@ -31,7 +31,21 @@ RUN set -ex\
     && rm jsim-2.0e.tar.gz\
     && cd jsim-2.0e\
     && make\
-    && cp jsim /usr/local/bin
+    && cp jsim /usr/local/bin\
+    && cd ..
+
+# set -ex コマンドの実行に失敗したらその場で終了する
+
+
+RUN set -ex\ 
+    \
+    && pip install cmake\
+    && git clone "https://github.com/JoeyDelp/JoSIM.git"\
+    && mkdir build && cd build\
+    && cmake ..\
+    && cmake --build . --config Release\
+    && make install
+
 
 RUN pip install -r requirments.txt
 # 一般ユーザーアカウントを追加
